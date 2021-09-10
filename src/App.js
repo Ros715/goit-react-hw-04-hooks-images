@@ -16,22 +16,18 @@ function App() {
   const [photosList, setPhotosList] = useState([]);
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(12);
+  //const [perPage, setPerPage] = useState(12);
+  const perPage = 12; /*never changed, not element of state*/
   const [largeURL, setLargeURL] = useState("");
 
-  const formatQuery = (text) => {
-    return text.trim().split(" ").join("+");
-  };
-
-  const loadPhotos = (query1, page1) => {
-    //console.log("query=", query1, "page=", page1);
+  const loadPhotos = (parQuery, parPage) => {
     setLoadInProggress(true);
-    apiService(query1, page1, perPage).then((apiOutput) => {
-      setQuery(query1);
-      setPage(page1);
+    apiService(parQuery, parPage, perPage).then((apiOutput) => {
+      setQuery(parQuery);
+      setPage(parPage);
       setEnableLoadMore(apiOutput.hits.length === perPage);
       setLoadInProggress(false);
-      if (page1 === 1) {
+      if (parPage === 1) {
         setPhotosList(apiOutput.hits);
       } else {
         setPhotosList(photosList.concat(apiOutput.hits));
